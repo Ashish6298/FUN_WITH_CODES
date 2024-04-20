@@ -301,4 +301,4 @@ const animationTimeline = () => {
     });
   };
   
-  resolveFetch().then(animationTimeline());
+  resolveFetch().then(animationTimeline()); 
