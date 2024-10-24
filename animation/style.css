@@ -4,41 +4,49 @@
     box-sizing: border-box;
 }
 
-:root{
+:root {
     --index: calc(1vw + 1vh);
     --transition: cubic-bezier(.1, .7, 0, 1);
 }
 
-body{
+body {
     background-color: #141414;
 }
 
-.wrapper{
+.wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
+    padding: 0 2rem; /* Add some padding to the sides */
 }
 
-.items{
+.items {
     display: flex;
     gap: 0.4rem;
     perspective: calc(var(--index) * 35);
 }
 
-.item{
+.item {
     width: calc(var(--index) * 3);
     height: calc(var(--index) * 12);
+    position: relative;
     background-color: #222;
-    background-size: cover;
+    background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
     cursor: pointer;
-    filter: grayscale(1) brightness(.5);
-    transition: transform 1.25s var(--transition), filter 3s var(--transition), width 1.25s var(--transition);
-    will-change: transform, filter, rotateY, width;
+    filter: grayscale(1) brightness(0.5);
+    transition: transform 1.25s var(--transition),
+                filter 1s var(--transition),
+                width 1.25s var(--transition),
+                box-shadow 0.5s ease;
+    will-change: transform, filter, rotateY, width, box-shadow;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    z-index: 1; /* Ensure all items start with the same z-index */
 }
 
-.item::before, .item::after{
+.item::before, .item::after {
     content: '';
     position: absolute;
     height: 100%;
@@ -46,68 +54,83 @@ body{
     right: calc(var(--index) * -1);
 }
 
-.item::after{
+.item::after {
     left: calc(var(--index) * -1);
 }
 
-.items .item:hover{
-    filter: inherit;
-    transform: translateZ(calc(var(--index) * 10));
+.items .item:hover {
+    filter: grayscale(0) brightness(1);
+    transform: translateZ(calc(var(--index) * 10)) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    z-index: 2; /* Ensure hovered items have higher z-index */
 }
 
-/*Right*/
-
-.items .item:hover + *{
-    filter: inherit;
+/* Right */
+.items .item:hover + * {
+    filter: grayscale(0.5) brightness(0.7);
     transform: translateZ(calc(var(--index) * 8.5)) rotateY(35deg);
-    z-index: -1;
+    z-index: 1; /* Ensure neighboring items stay accessible */
 }
 
-.items .item:hover + * + *{
-    filter: inherit;
+.items .item:hover + * + * {
+    filter: grayscale(0.5) brightness(0.7);
     transform: translateZ(calc(var(--index) * 5.6)) rotateY(40deg);
-    z-index: -2;
+    z-index: 1;
 }
 
-.items .item:hover + * + * + *{
-    filter: inherit;
+.items .item:hover + * + * + * {
+    filter: grayscale(0.5) brightness(0.7);
     transform: translateZ(calc(var(--index) * 2.5)) rotateY(30deg);
-    z-index: -3;
+    z-index: 1;
 }
 
-.items .item:hover + * + * + * + *{
-    filter: inherit;
+.items .item:hover + * + * + * + * {
+    filter: grayscale(0.5) brightness(0.7);
     transform: translateZ(calc(var(--index) * .6)) rotateY(15deg);
-    z-index: -4;
+    z-index: 1;
 }
 
-
-/*Left*/
-
-.items .item:has( + :hover){
-    filter: inherit;
+/* Left */
+.items .item:has(+ :hover) {
+    filter: grayscale(0.5) brightness(0.7);
     transform: translateZ(calc(var(--index) * 8.5)) rotateY(-35deg);
+    z-index: 1;
 }
 
-.items .item:has( + * + :hover){
-    filter: inherit;
+.items .item:has(+ * + :hover) {
+    filter: grayscale(0.5) brightness(0.7);
     transform: translateZ(calc(var(--index) * 5.6)) rotateY(-40deg);
+    z-index: 1;
 }
 
-.items .item:has( + * + * + :hover){
-    filter: inherit;
+.items .item:has(+ * + * + :hover) {
+    filter: grayscale(0.5) brightness(0.7);
     transform: translateZ(calc(var(--index) * 2.5)) rotateY(-30deg);
+    z-index: 1;
 }
 
-.items .item:has( + * + * + * + :hover){
-    filter: inherit;
+.items .item:has(+ * + * + * + :hover) {
+    filter: grayscale(0.5) brightness(0.7);
     transform: translateZ(calc(var(--index) * .6)) rotateY(-15deg);
+    z-index: 1;
 }
 
+/* Zoom effect on click */
 .items .item:active, .items .item:focus {
-	width: 28vw;
-	filter: inherit;
-	z-index: 100;
-	transform: translateZ(calc(var(--index) * 10));
+    width: 20vw;  /* Further reduced width on click */
+    height: auto; /* Maintain aspect ratio */
+    filter: grayscale(0) brightness(1);
+    z-index: 3; /* Ensure clicked item is on top */
+    transform: translateZ(calc(var(--index) * 10)) scale(1.15); /* Added slight zoom */
     margin: 0 .45vw;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    pointer-events: none; /* Disable pointer events for clicked item to prevent overlap issues */
+}
+
+/* Ensure adjacent items stay clickable */
+.items .item:not(:active) {
+    pointer-events: all; /* Enable pointer events for other items */
 }
