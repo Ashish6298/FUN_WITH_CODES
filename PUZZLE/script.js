@@ -1,4 +1,4 @@
-var images = ['ana.jpg'];
+var images = ['cha.png'];
 
 var currentIndex = 0;
 var totalClicks = 0;
