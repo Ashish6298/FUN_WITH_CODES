@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ROSE DAY</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+
+    body {
+      background: radial-gradient(circle, #1a1a1a, #000);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .text-3d {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 70px;
+      font-weight: 900;
+      color: white;
+      text-transform: uppercase;
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      letter-spacing: 5px;
+      text-shadow:
+        2px 2px 0 #ff4da6,
+        4px 4px 0 #ff1a75,
+        6px 6px 0 #cc0052,
+        8px 8px 20px rgba(255, 77, 166, 0.7);
+      animation: floatText 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatText {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+        text-shadow:
+          2px 2px 0 #ff4da6,
+          4px 4px 0 #ff1a75,
+          6px 6px 0 #cc0052,
+          8px 8px 20px rgba(255, 77, 166, 0.5);
+      }
+      100% {
+        transform: translate(-50%, -52%) scale(1.05);
+        text-shadow:
+          3px 3px 0 #ff66b2,
+          6px 6px 0 #ff3385,
+          9px 9px 0 #cc0052,
+          12px 12px 25px rgba(255, 77, 166, 0.8);
+      }
+    }
+
+    /* Falling hearts */
+    .heart-fall {
+      position: fixed;
+      top: -10px;
+      font-size: 24px;
+      color: #ff66b2;
+      text-shadow: 0px 0px 5px rgba(255, 102, 178, 0.8);
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) translateX(10px);
+        opacity: 0;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="scene">
+  <div class="floor"></div>
+
+  <div class="flower">
+    <i><i><i>
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+    </i></i></i>
+  </div>
+
+  <div class="leafs">
+    <i><i><i><div class="heart"></div></i></i></i>
+    <i><i><i><div class="heart"></div></i></i></i>
+    <i><i><i><div class="heart"></div></i></i></i>
+    <i><i><i><div class="heart"></div></i></i></i>
+    <i><i><i><div class="heart"></div></i></i></i>
+    <i><i><i><div class="heart"></div></i></i></i>
+    <i><i><i><div class="heart"></div></i></i></i>
+    <i><i><i><div class="heart"></div></i></i></i>
+    <i><i><i><div class="heart"></div></i></i></i>
+    <i><i><i><div class="heart"></div></i></i></i>
+    <i><i><i><div class="heart"></div></i></i></i>
+    <i><i><i><div class="heart"></div></i></i></i>
+  </div>
+</div>
+
+<!-- Floating 3D Text -->
+<div class="text-3d">Happy Rose Day</div>
+
+<!-- Falling Glitter Hearts -->
+<script>
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.innerHTML = '❤️'; 
+    heart.classList.add('heart-fall');
+
+    // Random position
+    heart.style.left = Math.random() * 100 + 'vw';
+
+    // Random animation duration
+    heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+
+    document.body.appendChild(heart);
+
+    // Remove heart after animation ends
+    setTimeout(() => {
+      heart.remove();
+    }, 5000);
+  }
+
+  setInterval(createHeart, 200);
+</script>
+<script src="./script.js"></script>
+
+</body>
+</html>
